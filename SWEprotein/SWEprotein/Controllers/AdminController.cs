@@ -17,21 +17,31 @@ namespace SWEprotein.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult AdderaProdukt()
+        {
+            ViewBag.productType = new SelectList(db.tbProductTypes, "iID", "sName");
+            return View();
+        }
+
         [HttpPost]
         public ActionResult AdderaProdukt(HttpPostedFileBase file, string productName, string productPrice, string productQuantity, string productDesc, string productType)
         {
+            ViewBag.productType = new SelectList(db.tbProductTypes, "iID", "sName");
             string fileString = null;
             if (file != null && file.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("/content/images/products"), fileName);
-                fileString = fileName;
-                file.SaveAs(path);
-
+                if (fileName != null)
+                {
+                    var path = Path.Combine(Server.MapPath("/content/images/products"), fileName);
+                    fileString = fileName;
+                    file.SaveAs(path);
+                }
             }
            
             bool status = false; // Meddelande indikator
-            List<tbProduct> products = getProducts();
+            var products = getProducts();
 
             try
             {
@@ -170,7 +180,7 @@ namespace SWEprotein.Controllers
 
         private List<tbProduct> getProducts()
         {
-            List<tbProduct> products = new List<tbProduct>();
+            var products = new List<tbProduct>();
             products = (from f in db.tbProducts
                         select f).ToList();
             return products;

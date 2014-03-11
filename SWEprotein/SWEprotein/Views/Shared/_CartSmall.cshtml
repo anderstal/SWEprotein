@@ -1,0 +1,21 @@
+﻿@using SWEprotein.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_CartSmall</title>
+</head>
+<body>
+    <div>
+       Antal produkter: @ViewBag.cartCount<br/>
+        Pris: @ViewBag.cartSum<br/>
+      
+        @Html.ActionLink("Gå till kassan", "Kundkorg", "Cart", null, new {@class="btn btn-xs btn-warning"})
+    </div>
+</body>
+</html>

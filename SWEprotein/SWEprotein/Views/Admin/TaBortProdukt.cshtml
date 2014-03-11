@@ -1,0 +1,28 @@
+﻿@using SWEprotein.Models
+@model List<SWEprotein.Models.tbProduct> 
+
+@{
+    ViewBag.Title = "TaBortProdukt";
+}
+
+<h2>TaBortProdukt</h2>
+
+@*@using (Html.BeginForm())
+{
+*@<table>
+
+@foreach (tbProduct f in Model)
+{
+    
+    <tr>
+        <td>
+    @f.sName
+            </td>
+        <td>
+    @Html.ActionLink("Ta bort", "TaBortProdukt", new { id = f.sName }) 
+            </td>
+        </tr>
+        
+}
+    </table>
+@*}*@

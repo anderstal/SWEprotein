@@ -1,0 +1,24 @@
+﻿@using SWEprotein.Models
+@model IQueryable<SWEprotein.Models.tbOrder>
+@{
+    ViewBag.Title = "Orders";
+}
+<h2>Orders</h2>
+Sök på mailadress:
+@using (Html.BeginForm("Orders", "Admin"))
+{
+@Html.TextBox("emailFilter")
+<input type="Submit" value="Sök"/>
+}
+  <br/>
+@{
+    foreach (tbOrder order in Model)
+    {
+        <div>OrderID: @order.iID</div>
+    <div>Email: @order.tbUser.sEmail</div>
+        <div>Pris: @order.iSum</div>
+    <div>Datum: @order.dtOrderDate</div>
+        <div>@Html.ActionLink("Redigera/Mer info", "HandleOrder", "Admin", new { id = order.iID}, null)</div>
+    <br/>
+    }
+}

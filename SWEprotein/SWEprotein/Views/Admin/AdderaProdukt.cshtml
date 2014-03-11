@@ -1,0 +1,34 @@
+﻿@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "AdderaProdukt";
+}
+
+<h2>Lägg till Produkt</h2>
+
+
+@using (Html.BeginForm("AdderaProdukt", "Admin", FormMethod.Post, 
+                                      new { enctype = "multipart/form-data" }))
+{
+<p>Produktnamn</p>
+@Html.TextBox("ProductName")
+<p>Produktbeskrivning</p>
+@Html.TextBox("ProductDesc")
+<p>Produktpris</p>
+@Html.TextBox("ProductPrice")
+<p>Antal</p>
+@Html.TextBox("ProductQuantity")
+   <p> Produkttyp</p>
+@Html.TextBox("ProductType")
+      @Html.ValidationSummary(true)
+   
+       <input type="file" name="file" />
+      
+   
+    <br /><br />
+<input type="submit" value="Lägg in Produkt" />
+    
+    
+} 
+
+<h4>@ViewBag.status</h4>

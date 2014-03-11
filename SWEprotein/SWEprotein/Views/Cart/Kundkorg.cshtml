@@ -1,0 +1,73 @@
+﻿
+@using Microsoft.Ajax.Utilities
+@using SWEprotein.Models
+@model IEnumerable<SWEprotein.Models.tbProduct>
+<style type="text/css">
+    
+    /* Behållare för en rad av produktrutor */
+    #productListing {
+        width:1040px;
+        float:left;
+    }
+    
+    /* Behållare för en produktruta */
+    .productWrapper {
+        float:left;
+        width:200px;
+        height:275px;
+        background-color:white;
+        margin:5px;
+        color:black;
+    }
+        /* Egenskaper för alla div-ar innuti productWrapper */
+        .productWrapper div {
+            margin:5px;
+        }
+
+    /* Produktbeskrivning */
+    .productDescription {
+        border-top:ridge;
+        border-bottom:ridge;
+    }
+
+    /* Bild på produkten */
+    .productIMG {
+        margin:0 auto;
+        height:80px;
+        width:60px;
+    }
+
+
+</style>
+
+@{
+    ViewBag.Title = "Kundkorg";
+    
+        foreach (tbProduct p in Model.DistinctBy(c => c.iID))
+        {
+
+         
+        <div id="productListing">
+            <div class="productWrapper thumbnail">
+                <div class="productIMG">
+                    <img src="@p.sPicture" class="img-responsive"/>
+                </div>
+                <div class="productFacts">
+                    <div class="productName">
+                        @p.sName
+                    </div>                               
+                </div>                                                   
+                <div class="productPrice">
+                    Pris: @p.iPrice
+                </div> <div class="productQuantity">
+                           Antal: @p.iCount
+                       </div>                 
+                <div class="addtobasket">           
+                    @Html.ActionLink("Ta bort från kundkorg", "CartRemove", new {id = p.iID})
+                </div>   
+            </div>           
+        </div> 
+  
+    } 
+ }
+ @Html.ActionLink("Betala", "CheckOut")

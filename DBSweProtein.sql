@@ -1,4 +1,4 @@
-USE GymHusetDB
+USE DBSweProtein
 
 GO
 
@@ -37,13 +37,20 @@ CREATE TABLE [tbProduct] (
 	[sDescription] NVARCHAR(2000),
 	[iStockBalance] INT NOT NULL,
 	[iItemsSold] INT NOT NULL,
-[iCount] INT NOT NULL,
+	[iCount] INT NOT NULL,
 	PRIMARY KEY ([iID])
 )
 
 CREATE TABLE [tbProductType] (
 	[iID] INT IDENTITY(1,1) NOT NULL,
 	[sName] NVARCHAR(100) NOT NULL,
+	[iProductCategory] INT NOT NULL,
+	PRIMARY KEY ([iID])
+)
+
+CREATE TABLE [tbProductCategory] (
+	[iID] INT IDENTITY(1,1) NOT NULL,
+	[sName] NVARCHAR(50) NOT NULL,
 	PRIMARY KEY ([iID])
 )
 
@@ -81,6 +88,9 @@ ADD FOREIGN KEY ([iShippingInfo]) REFERENCES [tbShippingInfo](iID)
 
 ALTER TABLE [tbProduct]
 ADD FOREIGN KEY ([iProductType]) REFERENCES [tbProductType](iID)
+
+ALTER TABLE [tbProductType]
+ADD FOREIGN KEY ([iProductCategory]) REFERENCES [tbProductCategory](iID)
 
 ALTER TABLE [tbOrder]
 ADD FOREIGN KEY ([iUserID]) REFERENCES [tbUser](iID)

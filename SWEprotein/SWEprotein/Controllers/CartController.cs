@@ -63,6 +63,13 @@ namespace SWEprotein.Controllers
 
         public ActionResult CheckOut(string mail, string adress, string postnumber, string city)
         {
+
+            Session["guestUser"] = new tbShippingInfo
+            {
+                sAddress=adress + mail,
+                sPostalNumber = postnumber,
+                sCity= city
+            };
             //string AgentID; //mitt konto/integration
             //string Key; //md5, mitt konto/integration
             //string Description = "SWEProtein";
@@ -80,7 +87,8 @@ namespace SWEprotein.Controllers
 
             var order = new tbOrder()
             {
-                iUserID = 2, //Byt till Session["login"].ID
+     
+                //iUserID = Session["guestUser"], //Byt till Session["login"].ID
                 iStatus = 1,
                 iSum = ((List<tbProduct>)Session["cartList"]).Sum(prod => prod.iPrice * prod.iCount),
                 dtOrderDate = DateTime.Now
@@ -102,6 +110,7 @@ namespace SWEprotein.Controllers
 
             }
             db.SubmitChanges();
+            Session["cartList"] = null;
             return View(); //Gå till för "färdig" betalning
         }
 

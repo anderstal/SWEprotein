@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GymHusetDB" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=HIGHTECH\SQLEXPRESS;Initial Catalog=GymHusetDB;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="GymHusetDBConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DBSweProtein" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=CHRISTIAN-PC\SQLEXPRESS;Initial Catalog=DBSweProtein;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DBSweProteinConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbOrder" Member="tbOrders">
     <Type Name="tbOrder">
       <Column Name="iID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -7,7 +7,6 @@
       <Column Name="iStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="iSum" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="dtOrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="iOrderTest" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="tbOrder_tbProductOrder" Member="tbProductOrders" ThisKey="iID" OtherKey="iOrderID" Type="tbProductOrder" />
       <Association Name="tbUser_tbOrder" Member="tbUser" ThisKey="iUserID" OtherKey="iID" Type="tbUser" IsForeignKey="true" />
       <Association Name="tbStatus_tbOrder" Member="tbStatus" ThisKey="iStatus" OtherKey="iID" Type="tbStatus" IsForeignKey="true" />
@@ -43,6 +42,13 @@
       <Association Name="tbProductType_tbProduct" Member="tbProductType" ThisKey="iProductType" OtherKey="iID" Type="tbProductType" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.tbProductCategory" Member="tbProductCategories">
+    <Type Name="tbProductCategory">
+      <Column Name="iID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tbProductCategory_tbProductType" Member="tbProductTypes" ThisKey="iID" OtherKey="iProductCategory" Type="tbProductType" />
+    </Type>
+  </Table>
   <Table Name="dbo.tbProductOrder" Member="tbProductOrders">
     <Type Name="tbProductOrder">
       <Column Name="iID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -58,7 +64,9 @@
     <Type Name="tbProductType">
       <Column Name="iID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="sName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="iProductCategory" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="tbProductType_tbProduct" Member="tbProducts" ThisKey="iID" OtherKey="iProductType" Type="tbProduct" />
+      <Association Name="tbProductCategory_tbProductType" Member="tbProductCategory" ThisKey="iProductCategory" OtherKey="iID" Type="tbProductCategory" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.tbRole" Member="tbRoles">

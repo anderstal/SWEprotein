@@ -5,24 +5,36 @@
     ViewBag.Title = "TaBortProdukt";
 }
 
-<h2>TaBortProdukt</h2>
-
+<h2>Ta bort produkt</h2>
+<br/>
+@Html.ActionLink("Tillbaka", "AdminSidan","Admin")
+<br/>
+<br/>
+<h4>Sök</h4>
+@using (Html.BeginForm("TaBortProdukt", "Admin", FormMethod.Post,
+    new {enctype = "multipart/form-data"}))
+    {
+             <div class="form-group">
+                     @Html.TextBox("searchString")                  
+             </div> <button type="submit" class="btn btn-default">Sök</button>
+    }
+<br/>
+<br/>
 
 <table>
-
-      @foreach (tbProduct f in Model)
-      {
+    @foreach (tbProduct f in Model)
+    {
     
-          <tr>
-              <td>
-                  @f.sName
-              </td>
-              <td>
-                  @Html.ActionLink("Ta bort", "TaBortProdukt", new { id = f.sName }) 
-              </td>
-          </tr>
+        <tr>
+            <td>
+                @f.sName
+            </td>
+            <td>
+                @Html.ActionLink("Ta bort", "TaBortProdukt", new { id = f.sName }) 
+            </td>
+        </tr>
         
-      }
-  </table>
+    }
+</table>
 <br/>
-@Html.ActionLink("Tillbaka", "Index","Product")
+

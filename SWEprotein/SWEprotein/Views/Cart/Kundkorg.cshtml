@@ -73,7 +73,7 @@
     <div>
         <br/>
         <br/>
-        
+        <div class="row" style="float:left">
         <div class="productWrapper">
         <p>Mail:</p>
         @Html.TextBox("mail")<br/>
@@ -85,10 +85,15 @@
         @Html.TextBox("city")<br/>
         <br/>
             <input type="submit"value="Lägg order" />
-            
+           </div>
             </div>
         </div>
 }
+<div class="row" style="float:left">
+    <h3>Medlem?</h3>
+    @Html.ActionLink("Logga in här","AdminSidan","Admin")
+
+</div>
 
 
 

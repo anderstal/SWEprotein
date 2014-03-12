@@ -162,7 +162,7 @@ namespace SWEprotein.Controllers
             return View();
         }
 
-        public ActionResult TaBortProdukt(string id)        // int borde användas som id
+        public ActionResult TaBortProdukt(string id, string searchString)        // int borde användas som id
         {
             List<tbProduct> productlista = new List<tbProduct>();
             productlista = (from f in db.tbProducts
@@ -172,6 +172,15 @@ namespace SWEprotein.Controllers
                                   where f.sName == id
                                   select f).FirstOrDefault();
 
+
+            var productList = db.tbProducts.ToList();
+
+            if (searchString != null)
+            {
+                productList = (from prod in db.tbProducts.Where(c => c.sName.Contains(searchString)) select prod).ToList();
+
+                return View(productList);
+            }
             if (id != null)
             {
                 db.tbProducts.DeleteOnSubmit(product2Delete);

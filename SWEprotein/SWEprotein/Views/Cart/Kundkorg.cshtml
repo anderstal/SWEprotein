@@ -1,7 +1,7 @@
-﻿
-@using Microsoft.Ajax.Utilities
+﻿@using Microsoft.Ajax.Utilities
 @using SWEprotein.Models
 @model IEnumerable<SWEprotein.Models.tbProduct>
+
 <style type="text/css">
     
     /* Behållare för en rad av produktrutor */
@@ -36,38 +36,37 @@
         height:80px;
         width:60px;
     }
-
+            /*<div id = "productListing" >*/
 
 </style>
-
-@{
-    ViewBag.Title = "Kundkorg";
-    
-        foreach (tbProduct p in Model.DistinctBy(c => c.iID))
-        {
-
-         
-        <div id="productListing">
-            <div class="productWrapper thumbnail">
+@*                         <div class="addCart">
+                          Pris: @p.iPrice:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          
+                                @Html.ActionLink("Lägg till", "CartAdd", "Cart", new {id = p.iID}, new { @class= "btn btn-warning btn-xs"})
+                        </div>               *@   
+    @foreach (tbProduct f in Model.DistinctBy(c => c.iID))
+    {
+        <div class="row" style="float:left">
+            <div class="productWrapper thumbnail" style="margin:5px">
+            <div class="col-xs-6 col-md-4">
                 <div class="productIMG">
-                    <img src="@p.sPicture" class="img-responsive"/>
+                    <img src="@f.sPicture" class="img-responsive"/>
                 </div>
-                <div class="productFacts">
-                    <div class="productName">
-                        @p.sName
-                    </div>                               
-                </div>                                                   
-                <div class="productPrice">
-                    Pris: @p.iPrice
-                </div> <div class="productQuantity">
-                           Antal: @p.iCount
-                       </div>                 
-                <div class="addtobasket">           
-                    @Html.ActionLink("Ta bort från kundkorg", "CartRemove", new {id = p.iID})
-                </div>   
-            </div>           
-        </div> 
-  
-    } 
- }
- @Html.ActionLink("Betala", "CheckOut")
+                <div>
+                    <div class="productFacts">
+                        <h4>@f.sName</h4>
+                    </div>
+                    <div class="addcart">
+                        <h5>Pris: @f.iPrice</h5>
+                    </div>
+                    <h6>Antal: @f.iCount</h6>
+                    @Html.ActionLink("Ta bort från kundkorg", "CartRemove", new {id = f.iID}, new { @class="btn btn-warning btn-xs"})  
+                </div>
+                        
+            </div>
+                </div>
+        </div>    
+     }
+
+
+

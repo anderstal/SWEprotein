@@ -1,7 +1,9 @@
-﻿@using SWEprotein.Models
+﻿@using GridMvc.Columns
+@using SWEprotein.Models
 @using GridMvc.Html
 
 @model IEnumerable<SWEprotein.Models.tbProduct>
+
 
 @{
     ViewBag.Title = "AdminSidan";
@@ -30,25 +32,26 @@
         <title>Index</title>
     </head>
     <body>
-        <h1>Produkter med lågt lagersaldo:</h1>
+        <h3>Produkter med lågt lagersaldo:</h3>
         <hr />
         <div style="width:500px;">
             @Html.Grid(Model).Columns(columns => 
             {
                 columns.Add(c => c.iID).Titled("ID");
                 columns.Add(c => c.sName).Titled("Produktnamn").Filterable(true);
-                columns.Add(c => c.iStockBalance).Titled("Lagersaldo");
+                columns.Add(c => c.iItemsSold).Titled("Sålda enheter");
+                IGridColumn<tbProduct> gridColumn = columns.Add(c => c.iStockBalance).Titled("Lagersaldo");
             }).WithPaging(3).Sortable(true)
         </div>
     </body>
 </html>
 
-@*    @foreach (tbProduct f in Model)
+@*    @foreach (tbUser f in Model)
     {
        
         <div class="row">
 
-            <div class="col-xs-6 col-md-4">@f.sName<div class="col-xs-6 col-md-4">Namn:</div></div>
+            <div class="col-xs-6 col-md-4">@f.<div class="col-xs-6 col-md-4">Namn:</div></div>
 
             <div class="col-xs-6 col-md-4">@f.iStockBalance<div class="col-xs-6 col-md-4">Lagersaldo:</div></div>
                          

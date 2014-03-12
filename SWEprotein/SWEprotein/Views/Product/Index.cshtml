@@ -1,4 +1,5 @@
 ﻿@using SWEprotein.Models
+@model List<tbProduct>
 @{
     ViewBag.Title = "SWEprotein";
 
@@ -43,17 +44,52 @@
 
 <div>
    
+    <p>
+        Sortera produkter:
+        <select id="ddlSortProducts">
+            <option value="">------</option>
+            <option value="name">Namn</option>
+            <option value="price">Pris</option>
+            <option value="popularity">Popularitet</option>
+        </select>
+    </p>
+
+
     <div id="productListing">
+       
         @{
-            foreach (tbProduct p in Model)
+            List<tbProduct> products = new List<tbProduct>();
+
+            if (Request.QueryString["sort"] == "name")
+            {
+                products = Model.OrderBy(c => c.sName).ToList();
+            }
+
+            else if (Request.QueryString["sort"] == "price")
+            {
+                products = Model.OrderBy(c => c.iPrice).ToList();
+            }
+
+            else if (Request.QueryString["sort"] == "popularity")
+            {
+                products = Model.OrderByDescending(c => c.iItemsSold).ToList();
+            }
+
+            else
+            {
+                products = Model.ToList();
+            }
+
+
+            foreach (tbProduct p in products)
             {
                 <div class="productWrapper thumbnail">
                     <div class="productIMGWrapper">
-                    <img class="productIMG img-responsive" src="@p.sPicture" />
+                        <img class="productIMG img-responsive" src="@p.sPicture" />
                     </div>
                     <div class="productFacts">
                         <div class="productName">
-                          <h3>  @p.sName</h3>
+                            <h3>  @p.sName</h3>
                         </div>          
                         <div>
                             @p.sDescription<br/><br/>
@@ -62,10 +98,10 @@
                     <div class="productBuy">
                           
                       
-                         <div class="addCart">
-                          Pris: @p.iPrice:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="addCart">
+                            Pris: @p.iPrice:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           
-                                @Html.ActionLink("Lägg till", "CartAdd", "Cart", new {id = p.iID}, new { @class= "btn btn-warning btn-xs"})
+                            @Html.ActionLink("Lägg till", "CartAdd", "Cart", new {id = p.iID}, new { @class= "btn btn-warning btn-xs"})
                         </div>
                     </div> 
                 </div>               

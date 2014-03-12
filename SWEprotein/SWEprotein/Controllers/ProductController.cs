@@ -36,9 +36,25 @@ namespace SWEprotein.Controllers
 
         public ActionResult Sortiment(int id)
         {
-            var typeList = db.tbProducts.Where(c => c.iProductType == id).ToList();
-            return View("Index", typeList);
+            var joinList = (from p in db.tbProducts
+                            join t in db.tbProductTypes
+                            on p.iProductType equals t.iID
+                            select new {ID = p.iID, Cat = t.iProductCategory}).Where(c => c.Cat == id).Select(c => c.ID).ToList();
 
+            List<tbProduct> productList = (from p in db.tbProducts
+                                           where joinList.Contains(p.iID)
+                                           select p).ToList();
+
+            //var typeList = from VAR in joinList 
+            
+                                        //where p.iProductType ==
+                                        //          (from t in db.tbProductTypes
+                                        //          where t.iProductCategory == id
+                                        //          select t.iID)
+                                        //select p).ToList();
+
+            //var typeList = db.tbProducts.Where(c => c.iProductType == id).ToList();
+            return View("Index", productList);
         }
 
         public ActionResult Topplistan()

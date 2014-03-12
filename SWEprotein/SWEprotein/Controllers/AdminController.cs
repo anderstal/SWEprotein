@@ -14,14 +14,6 @@ namespace SWEprotein.Controllers
 
         DataClasses1DataContext db = new DataClasses1DataContext();
 
-
-
-        public ActionResult test()
-        {
-            return View();
-        }
-
-
         public ActionResult AdminSidan()
         {
             var lowQuantityProducts = (from f in db.tbProducts

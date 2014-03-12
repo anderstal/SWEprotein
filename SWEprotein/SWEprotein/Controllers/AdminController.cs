@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using SWEprotein.Models;
 
 namespace SWEprotein.Controllers
@@ -13,10 +14,25 @@ namespace SWEprotein.Controllers
 
         DataClasses1DataContext db = new DataClasses1DataContext();
 
-        public ActionResult AdminSidan()
+
+
+        public ActionResult test()
         {
             return View();
         }
+
+
+        public ActionResult AdminSidan()
+        {
+            var lowQuantityProducts = (from f in db.tbProducts
+                where f.iStockBalance <= 10
+                select f).ToList();
+
+            ViewBag.Lager = lowQuantityProducts;
+
+            return View(lowQuantityProducts);
+        }
+
         [HttpGet]
         public ActionResult AdderaProdukt()
         {

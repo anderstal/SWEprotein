@@ -1,9 +1,13 @@
-﻿@{
+﻿@using SWEprotein.Models
+@using GridMvc.Html
+
+@model IEnumerable<SWEprotein.Models.tbProduct>
+
+@{
     ViewBag.Title = "AdminSidan";
 }
 
 <h2>AdminSidan</h2>
-
 
 @Html.ActionLink("Lägg till produkt", "AdderaProdukt")
 <br />
@@ -12,3 +16,43 @@
 @Html.ActionLink("Orders", "Orders", "Admin")
 <br />
 @Html.ActionLink("Tillbaka", "Index","Product")
+
+
+<!DOCTYPE html>
+ 
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+        <script src="@Url.Content("~/Scripts/jquery-2.1.0.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+        <title>Index</title>
+    </head>
+    <body>
+        <h1>Produkter med lågt lagersaldo:</h1>
+        <hr />
+        <div style="width:500px;">
+            @Html.Grid(Model).Columns(columns => 
+            {
+                columns.Add(c => c.iID).Titled("ID");
+                columns.Add(c => c.sName).Titled("Produktnamn").Filterable(true);
+                columns.Add(c => c.iStockBalance).Titled("Lagersaldo");
+            }).WithPaging(3).Sortable(true)
+        </div>
+    </body>
+</html>
+
+@*    @foreach (tbProduct f in Model)
+    {
+       
+        <div class="row">
+
+            <div class="col-xs-6 col-md-4">@f.sName<div class="col-xs-6 col-md-4">Namn:</div></div>
+
+            <div class="col-xs-6 col-md-4">@f.iStockBalance<div class="col-xs-6 col-md-4">Lagersaldo:</div></div>
+                         
+            <div class="col-xs-6 col-md-4">@f.iPrice<div class="col-xs-6 col-md-4">Pris:</div></div>
+                    
+        </div>
+    }*@

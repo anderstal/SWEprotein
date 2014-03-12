@@ -11,18 +11,19 @@
 {
 *@<table>
 
-@foreach (tbProduct f in Model)
-{
+      @foreach (tbProduct f in Model)
+      {
     
-    <tr>
-        <td>
-    @f.sName
-            </td>
-        <td>
-    @Html.ActionLink("Ta bort", "TaBortProdukt", new { id = f.sName }) 
-            </td>
-        </tr>
+          <tr>
+              <td>
+                  @f.sName
+              </td>
+              <td>
+                  @Html.ActionLink("Ta bort", "TaBortProdukt", new { id = f.sName }) 
+              </td>
+          </tr>
         
-}
-    </table>
-@*}*@
+      }
+  </table>
+<br/>
+@Html.ActionLink("Tillbaka", "Index","Product")

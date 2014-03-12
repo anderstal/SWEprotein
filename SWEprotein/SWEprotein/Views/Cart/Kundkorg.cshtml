@@ -2,6 +2,9 @@
 @using SWEprotein.Models
 @model IEnumerable<SWEprotein.Models.tbProduct>
 
+
+
+
 <style type="text/css">
     
     /* Behållare för en rad av produktrutor */
@@ -39,11 +42,7 @@
             /*<div id = "productListing" >*/
 
 </style>
-@*                         <div class="addCart">
-                          Pris: @p.iPrice:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          
-                                @Html.ActionLink("Lägg till", "CartAdd", "Cart", new {id = p.iID}, new { @class= "btn btn-warning btn-xs"})
-                        </div>               *@   
+
     @foreach (tbProduct f in Model.DistinctBy(c => c.iID))
     {
         <div class="row" style="float:left">
@@ -67,6 +66,29 @@
                 </div>
         </div>    
      }
+
+@using (Html.BeginForm("CheckOut", "Cart", FormMethod.Post,
+    new {enctype = "multipart/form-data"}))
+{
+    <div>
+        <br/>
+        <br/>
+        
+        <div class="productWrapper">
+        <p>Mail:</p>
+        @Html.TextBox("mail")<br/>
+        <p>Adress:</p>
+        @Html.TextBox("adress")<br/>
+        <p>Postnummer:</p>  
+        @Html.TextBox("postnumber")<br/>
+        <p>Ort:</p>
+        @Html.TextBox("city")<br/>
+        <br/>
+            <input type="submit"value="Lägg order" />
+            
+            </div>
+        </div>
+}
 
 
 

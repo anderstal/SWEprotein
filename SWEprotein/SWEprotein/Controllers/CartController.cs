@@ -61,7 +61,7 @@ namespace SWEprotein.Controllers
 
         }
 
-        public ActionResult CheckOut()
+        public ActionResult CheckOut(string mail, string adress, string postnumber, string city)
         {
             //string AgentID; //mitt konto/integration
             //string Key; //md5, mitt konto/integration

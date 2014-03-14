@@ -10,21 +10,23 @@
  
 
 <div class="row">
- 
+ <div class="col-md-12" style="padding-left:13px; padding-right:5px; margin-top:10px;">
+            <div class="thumbnail" style="height:180px; width:166px; background-color:black;">
   
-
+               <a href="/Product/Topplistan"> <p class="text-center h4" style="margin:0px;">TOPPLISTAN</p></a>
+                <hr/>
+                <ol style="padding-left:20px;">
     @foreach (tbProduct prod in Model)
     {
-        <div class="col-md-12" style="padding-left:13px; padding-right:5px; margin-top:10px;">
-            <div class="thumbnail" style="height:200px; width:166px;">
-                <img src="@prod.sPicture" class="img-responsive" alt="..." style="height:80px;">
-                <div class="caption">
-                    <h4>@prod.sName</h4>                 
-                    <hr style="color:darkgrey"/>
-                    <p style="font-weight:bold">Pris: @prod.iPrice:- @Html.ActionLink("Köp", "CartAdd", "Cart", new {id = prod.iID}, new {@class="btn-xs btn-primary"}) </p>
-                </div>
-            </div>
-        </div>
+        
+            
+           <li> @Html.ActionLink(@prod.sName, "Produkt", "Product", new { id = prod.iID})</li>
+      @*  <p style="font-weight:bold">@prod.sName @prod.iPrice:-</p>*@
+        
+         
    
     }
+                    </ol>
+                   </div>
+        </div>
 </div>

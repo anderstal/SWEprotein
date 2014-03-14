@@ -1,5 +1,8 @@
 ﻿
 @using SWEprotein.Models
+<style type="text/css">.marginbuy {
+     margin-left: 40px;
+ }</style>
 
 
 
@@ -15,12 +18,12 @@
     {
         <div class="col-md-3" style="padding-left:5px; padding-right:5px;">
             <div class="thumbnail" style="height:220px;">
-                <img src="@prod.sPicture" class="img-responsive" alt="..." style="height:80px;">
+               <a href="/Product/Produkt/@prod.iID"> <img src="@prod.sPicture" class="img-responsive" alt="..." style="height:80px;"></a>
                 <div class="caption">
-                    <p style="font-weight:bold">@prod.sName</p>
+                  <a href="/Product/Produkt/@prod.iID">   <p style="font-weight:bold; color:black; margin-top:10px;">@prod.sName</p></a>
                     <p style="font-size:x-small">@prod.sDescription</p>
                     <hr style="color:darkgrey; margin-top:5px; margin-bottom:30px;"/>
-                    <p style="font-weight:bold">Pris: @prod.iPrice:- @Html.ActionLink("Köp", "CartAdd", "Cart", new {id = prod.iID}, new {@class="btn-xs btn-primary"}) </p>
+                    <p style="font-weight:bold; color:red;">Pris: @prod.iPrice:- @Html.ActionLink("Köp", "CartAdd", "Cart", new {id = prod.iID}, new {@class="btn-xs btn-primary marginbuy"}) </p>
                 </div>
             </div>
         </div>

@@ -18,10 +18,10 @@
          }
 
         .borderbody {
-            border: darkgoldenrod;
+            /*border: darkgoldenrod;
             border-width: 2px;
             border-style: outset;
-            border-spacing: 5px;
+            border-spacing: 5px;*/
         }
 
     
@@ -35,7 +35,15 @@ border-color: #e7e7e7;
        
     </style>
 </head>
-    <body style="background-color:darkgoldenrod">
+    <body style="background-color:black">
+           <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/sv_SE/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
         
           
         <div class="container" style="background:black; background-color:black;">
@@ -103,34 +111,34 @@ border-color: #e7e7e7;
 	
             <div class="row clearfix margintop">
                 <div class="col-md-1" style="padding:0;">
-                   <a href="/Product/Index"> <img src="~/Content/images/logoSweprot.png" style="height:150px; width:300px;"/></a></div>
+                    <a href="/Product/Index"> <img src="~/Content/images/logoSweprot.png" style="height:150px; width:300px;"/></a></div>
                 <div class="col-md-2"></div>
                 <div class="col-md-5" style="margin-top:80px;"><ul class="nav nav-tabs nav-justified">
                                                                    <li>@Html.ActionLink("Topplistan", "Topplistan", "Product")</li>
                                                                    <li class="dropdown">
                                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kosttillskott</a>
                                                                        <ul class="dropdown-menu">
-                                                              <li>@Html.ActionLink("Protein", "Sortiment", "Product", new {id = 15}, null)</li>
-    <li>@Html.ActionLink("Kolhydrater", "Sortiment", "Product", new {id = 5}, null)</li>
-	  <li>@Html.ActionLink("Bars", "Sortiment", "Product", new {id = 3}, null)</li>
-	    <li>@Html.ActionLink("Gainer", "Sortiment", "Product", new {id = 8}, null)</li>
-		  <li>@Html.ActionLink("Vitaminer", "Sortiment", "Product", new {id = 11}, null)</li>
+                                                                           <li>@Html.ActionLink("Protein", "Sortiment", "Product", new {id = 15}, null)</li>
+                                                                           <li>@Html.ActionLink("Kolhydrater", "Sortiment", "Product", new {id = 5}, null)</li>
+                                                                           <li>@Html.ActionLink("Bars", "Sortiment", "Product", new {id = 3}, null)</li>
+                                                                           <li>@Html.ActionLink("Gainer", "Sortiment", "Product", new {id = 8}, null)</li>
+                                                                           <li>@Html.ActionLink("Vitaminer", "Sortiment", "Product", new {id = 11}, null)</li>
                                                                            <li>@Html.ActionLink("Drycker", "Sortiment", "Product", new {id = 6}, null)</li>
-                                                                              <li>@Html.ActionLink("Fettförbrännare", "Sortiment", "Product", new {id = 7}, null)</li>
-      <li>@Html.ActionLink("Kreatin", "Sortiment", "Product", new {id = 9}, null)</li>
-	    <li>@Html.ActionLink("Tillbehör", "Sortiment", "Product", new {id = 13}, null)</li>
+                                                                           <li>@Html.ActionLink("Fettförbrännare", "Sortiment", "Product", new {id = 7}, null)</li>
+                                                                           <li>@Html.ActionLink("Kreatin", "Sortiment", "Product", new {id = 9}, null)</li>
+                                                                           <li>@Html.ActionLink("Tillbehör", "Sortiment", "Product", new {id = 13}, null)</li>
                                                                        </ul>
                                                                    </li>
                                                                    <li class="dropdown">
                                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kläder</a>
                                                                        <ul class="dropdown-menu">
                                                                            <li>@Html.ActionLink("Byxor", "Sortiment", "Product", new {id = 4}, null)</li>
-                                                                            <li>@Html.ActionLink("Tröjor", "Sortiment", "Product", new {id = 14}, null)</li>
+                                                                           <li>@Html.ActionLink("Tröjor", "Sortiment", "Product", new {id = 14}, null)</li>
                                                                        </ul>
                                                                    </li>
                                                                  
-                                                                        <li>@Html.ActionLink("Kostschema", "KostScheman", "Info")</li>
-                                                                    <li>@Html.ActionLink("Info", "Info", "Info")</li>
+                                                                   <li>@Html.ActionLink("Kostschema", "KostScheman", "Info")</li>
+                                                                   <li>@Html.ActionLink("Info", "Info", "Info")</li>
                             
                 
 
@@ -156,13 +164,13 @@ border-color: #e7e7e7;
                                                       </div>
                                                   </div>
                                                   <div class="item">
-                                                       <a href="/Info/Erbjudanden"><img src="/Content/images/gymhusetrea2.jpg" alt=""></a>
+                                                      <a href="/Info/Erbjudanden"><img src="/Content/images/gymhusetrea2.jpg" alt=""></a>
                                                       <div class="carousel-caption">
   
                                                       </div>
                                                   </div>
                                                   <div class="item">
-                                                     <a href="/Info/Erbjudanden">  <img src="/Content/images/gymhusetrea3.jpg" alt=""></a>
+                                                      <a href="/Info/Erbjudanden">  <img src="/Content/images/gymhusetrea3.jpg" alt=""></a>
                                                       <div class="carousel-caption">
    
                                                       </div>
@@ -177,7 +185,7 @@ border-color: #e7e7e7;
                                                   <span class="glyphicon glyphicon-chevron-right"></span>
                                               </a>
                                           </div>
-                    <div>@Html.Action("_TopList", "Shared")</div>
+                                          <div>@Html.Action("_TopList", "Shared")</div>
                                       </div>
                 </div>
                 <div class="col-md-8 borderbody" id="contentDiv"> 
@@ -187,7 +195,7 @@ border-color: #e7e7e7;
                     @Scripts.Render("~/bundles/jquery")
                     @Scripts.Render("~/bundles/bootstrapjs")
                 </div>
-                <div class="col-md-2"> 
+                <div class="col-md-2"> <div class="fb-like-box" data-href="https://www.facebook.com/pages/Sweprotte/1426843010891655" data-width="200" data-height="500" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
                 </div>
             </div>
             <div class="row clearfix">

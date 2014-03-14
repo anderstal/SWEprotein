@@ -11,6 +11,7 @@ namespace SWEprotein.Controllers
     public class CartController : Controller
     {
         DataClasses1DataContext db = new DataClasses1DataContext();
+        DataClasses2DataContext dbGuest = new DataClasses2DataContext();
         List<tbProduct> basket = new List<tbProduct>();
 
         //Kundkorg.cshtml, listar vad som finns i kundkorgen.
@@ -74,12 +75,25 @@ namespace SWEprotein.Controllers
 
         }
 
-        public ActionResult CheckOut()
+        public ActionResult CheckOut(string mail, string telenr, string adress, string postnumber, string city)
         {
             if (Session["cartList"] != null)
             {
                 ViewBag.cartCount = ((List<tbProduct>)Session["cartList"]).Sum(c => c.iCount);
             }
+            var guestShipping = new tbGuestShipping
+            {
+                sAddress = adress,
+                sPostalNumber = postnumber,
+                sCity = city,
+                sEmail = mail,
+                sTelephone = telenr,
+                sStatus = "Betald",
+                dtOrderDate = DateTime.Today
+            };
+            dbGuest.tbGuestShippings.InsertOnSubmit(guestShipping);
+            dbGuest.SubmitChanges();
+
             //string AgentID; //mitt konto/integration
             //string Key; //md5, mitt konto/integration
             //string Description = "SWEProtein";
@@ -95,34 +109,41 @@ namespace SWEprotein.Controllers
             //string MD5string = SellerEmail + ":" + Cost + ":" + ExtraCost + ":" + OkUrl + ":" + GuaranteeOffered
             //string MD5Hash = MD5(MD5string);
 
-            var order = new tbOrder
+            foreach (tbProduct p in ((List<tbProduct>)Session["cartList"]).Distinct())
             {
-                iUserID = 2, //Byt till Session["login"].ID
-                iStatus = 1,
-                iSum = ((List<tbProduct>)Session["cartList"]).Sum(prod => prod.iPrice * prod.iCount),
-                dtOrderDate = DateTime.Now
-
-            };
-
-            db.tbOrders.InsertOnSubmit(order);
-            db.SubmitChanges();
-            foreach (tbProduct prod in ((List<tbProduct>)Session["cartList"]))
-            {
-                var prodOrder = new tbProductOrder
+                var guestOrder = new tbGuestOrder
                 {
-                    iOrderID = order.iID,
-                    iProductID = prod.iID,
-                    iQuantity = prod.iCount,
-                    iPrice = prod.iPrice
+                    iGuestShippingID = guestShipping.iID,
+                    sProductName = p.sName,
+                    iQuantity = ((List<tbProduct>)Session["cartList"]).First(c => c.iID == p.iID).iCount,
+                    iPriceTotal = ((List<tbProduct>)Session["cartList"]).First(c => c.iID == p.iID).iCount *
+                                  ((List<tbProduct>)Session["cartList"]).First(pt => pt.iID == p.iID).iPrice
                 };
-                db.tbProductOrders.InsertOnSubmit(prodOrder);
 
+
+                tbProduct product = (from prod in db.tbProducts
+                                     where prod.iID == p.iID
+                                     select prod).First();
+                product.iItemsSold += guestOrder.iQuantity;
+
+                tbUser user = (from u in db.tbUsers
+                               where u.iID == 1
+                               select u).First();
+                user.iTotalPurchase += guestOrder.iPriceTotal;
+
+                db.SubmitChanges();
+
+                guestShipping.iSum += guestOrder.iPriceTotal;
+
+                dbGuest.tbGuestOrders.InsertOnSubmit(guestOrder);
             }
-            db.SubmitChanges();
+
+
+            dbGuest.SubmitChanges();
+
+
+            Session["cartList"] = null;
             return View(); //Gå till för "färdig" betalning
         }
-
-
-
     }
 }

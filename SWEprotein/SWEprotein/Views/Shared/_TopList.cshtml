@@ -1,5 +1,30 @@
 ﻿@{
-    ViewBag.Title = "_TopList";
+    Layout = null;
 }
+@using SWEprotein.Models
 
-<h2>_TopList</h2>
+
+
+<link href="~/Content/OverrideBStrap.css" rel="stylesheet" />
+ 
+ 
+
+<div class="row">
+ 
+  
+
+    @foreach (tbProduct prod in Model)
+    {
+        <div class="col-md-12" style="padding-left:13px; padding-right:5px; margin-top:10px;">
+            <div class="thumbnail" style="height:200px; width:166px;">
+                <img src="@prod.sPicture" class="img-responsive" alt="..." style="height:80px;">
+                <div class="caption">
+                    <h4>@prod.sName</h4>                 
+                    <hr style="color:darkgrey"/>
+                    <p style="font-weight:bold">Pris: @prod.iPrice:- @Html.ActionLink("Köp", "CartAdd", "Cart", new {id = prod.iID}, new {@class="btn-xs btn-primary"}) </p>
+                </div>
+            </div>
+        </div>
+   
+    }
+</div>

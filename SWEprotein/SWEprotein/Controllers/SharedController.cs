@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using SWEprotein.Models;
@@ -12,6 +13,12 @@ namespace SWEprotein.Controllers
         DataClasses1DataContext db = new DataClasses1DataContext();
 
         //Visar hur många varor det är i kundkorgen+total kostnad
+        public ActionResult _Layout()
+        {
+          
+            var typeList = from f in db.tbProductTypes select f;
+            return View(typeList);
+        }
         public ActionResult _CartSmall()
         {
 
@@ -33,7 +40,7 @@ namespace SWEprotein.Controllers
 
             //Välj ut alla produkter i databasen och sortera på antal sålda produkter, flest -> minst
             List<tbProduct> productList = (from p in db.tbProducts
-                                           select p).OrderByDescending(p => p.iItemsSold).Take(12).ToList();
+                                           select p).OrderByDescending(p => p.iItemsSold).Take(5).ToList();
 
 
 

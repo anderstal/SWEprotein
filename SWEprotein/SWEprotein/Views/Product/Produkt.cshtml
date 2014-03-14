@@ -1,75 +1,39 @@
-﻿@using SWEprotein.Models
-@{
-    ViewBag.Title = "SWEprotein";
-
-}
-<style type="text/css">
-    
-    /* Behållare för en rad av produktrutor */
-    #productListing {
-        width:1040px;
-        float:left;
-    }
-    
-    /* Behållare för en produktruta */
-    .productWrapper {
-        float:left;
-        width:200px;
-        height:275px;
-        background-color:white;
-        margin:5px;
-        color:black;
-    }
-        /* Egenskaper för alla div-ar innuti productWrapper */
-        .productWrapper div {
-            margin:5px;
-        }
-
-    /* Produktbeskrivning */
-    .productDescription {
-        border-top:ridge;
-        border-bottom:ridge;
-    }
-
-    /* Bild på produkten */
-    .productIMG {
-        margin:0 auto;
-        height:100px;
-        width:80px;
-    }
+﻿
+@using SWEprotein.Models
 
 
-</style>
 
-<div>
+<link href="~/Content/OverrideBStrap.css" rel="stylesheet" />
+ 
+ 
+
+<div class="row">
+ 
+  
+
+    @foreach (tbProduct prod in Model)
+    {
+        <div class="col-md-3" style="padding-left:5px; padding-right:5px;">
+            <div class="thumbnail" style="height:250px;">
+                <img src="@prod.sPicture" class="img-responsive" alt="..." style="height:80px;">
+                <div class="caption">
+                    <h4>@prod.sName</h4>
+                    <p>@prod.sDescription</p>
+                    <hr style="color:darkgrey"/>
+                    <p style="font-weight:bold">Pris: @prod.iPrice:- @Html.ActionLink("Köp", "CartAdd", "Cart", new {id = prod.iID}, new {@class="btn-xs btn-primary"}) </p>
+                </div>
+            </div>
+        </div>
    
-    <div id="productListing">
-        @{
-            foreach (tbProduct p in Model)
-            {
-                <div class="productWrapper thumbnail">
-                    <div class="productIMGWrapper">
-                    <img class="productIMG img-responsive" src="@p.sPicture" />
-                    </div>
-                    <div class="productFacts">
-                        <div class="productName">
-                          <h3>  @p.sName</h3>
-                        </div>          
-                        <div>
-                            @p.sDescription<br/><br/>
-                        </div>
-                    </div>                    
-                    <div class="productBuy">
-                          
-                      
-                         <div class="addCart">
-                          Pris: @p.iPrice:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          
-                                @Html.ActionLink("Lägg till", "CartAdd", "Cart", new {id = p.iID}, new { @class= "btn btn-warning btn-xs"})
-                        </div>
-                    </div> 
-                </div>               
-            } 
-        }
-    </div>
+    }
 </div>
+<div class="text-center"><ul class="pagination">
+  <li><a href="/Product/Index/0">&laquo;</a></li>
+  <li>@Html.ActionLink("1", "Index", "Product", new {pagination = 1}, null)</li>
+  <li>@Html.ActionLink("1", "Index", "Product", new {pagination = 2}, null)</li>
+  <li>@Html.ActionLink("1", "Index", "Product", new {pagination = 3}, null)</li>
+  <li>@Html.ActionLink("1", "Index", "Product", new {pagination = 4}, null)</li>
+  <li>@Html.ActionLink("1", "Index", "Product", new {pagination = 5}, null)</li>
+  <li><a href="/Product/Index/0">&laquo;</a></li>
+</ul></div>
+    

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using SWEprotein.Models;
 
 namespace SWEprotein.Controllers
@@ -16,15 +15,8 @@ namespace SWEprotein.Controllers
 
         public ActionResult AdminSidan()
         {
-            var lowQuantityProducts = (from f in db.tbProducts
-                where f.iStockBalance <= 10
-                select f).ToList();
-
-            ViewBag.Lager = lowQuantityProducts;
-
-            return View(lowQuantityProducts);
+            return View();
         }
-
         [HttpGet]
         public ActionResult AdderaProdukt()
         {
@@ -162,7 +154,7 @@ namespace SWEprotein.Controllers
             return View();
         }
 
-        public ActionResult TaBortProdukt(string id, string searchString)        // int borde användas som id
+        public ActionResult TaBortProdukt(string id)        // int borde användas som id
         {
             List<tbProduct> productlista = new List<tbProduct>();
             productlista = (from f in db.tbProducts
@@ -172,15 +164,6 @@ namespace SWEprotein.Controllers
                                   where f.sName == id
                                   select f).FirstOrDefault();
 
-
-            var productList = db.tbProducts.ToList();
-
-            if (searchString != null)
-            {
-                productList = (from prod in db.tbProducts.Where(c => c.sName.Contains(searchString)) select prod).ToList();
-
-                return View(productList);
-            }
             if (id != null)
             {
                 db.tbProducts.DeleteOnSubmit(product2Delete);

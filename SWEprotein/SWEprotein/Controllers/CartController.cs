@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using SWEprotein.Models;
@@ -15,6 +16,10 @@ namespace SWEprotein.Controllers
         //Kundkorg.cshtml, listar vad som finns i kundkorgen.
         public ActionResult Kundkorg()
         {
+            if (Session["cartList"] != null)
+            {
+                ViewBag.cartCount = ((List<tbProduct>)Session["cartList"]).Sum(c => c.iCount);
+            }
             if (Session["cartList"] == null)
             {
                 return View("EmptyCart");
@@ -31,12 +36,20 @@ namespace SWEprotein.Controllers
         //Tar bort produkt från kundkorgen
         public ActionResult CartRemove(int? id)
         {
+            if (Session["cartList"] != null)
+            {
+                ViewBag.cartCount = ((List<tbProduct>)Session["cartList"]).Sum(c => c.iCount);
+            }
             ((List<tbProduct>)Session["cartList"]).RemoveAll(c => c.iID == id);
             return RedirectToAction("Kundkorg");
         }
         //Lägger till produkt i kundkorgen
         public ActionResult CartAdd(int? id)
         {
+            if (Session["cartList"] != null)
+            {
+                ViewBag.cartCount = ((List<tbProduct>)Session["cartList"]).Sum(c => c.iCount);
+            }
             var findProduct = (from f in db.tbProducts.Where(c => c.iID == id) select f).FirstOrDefault();
 
             if (Session["cartList"] == null)
@@ -55,21 +68,18 @@ namespace SWEprotein.Controllers
             {
                 prod.iCount++;
             }
-
             return RedirectToAction("Index", "Product");
+          
 
 
         }
 
-        public ActionResult CheckOut(string mail, string adress, string postnumber, string city)
+        public ActionResult CheckOut()
         {
-
-            Session["guestUser"] = new tbShippingInfo
+            if (Session["cartList"] != null)
             {
-                sAddress=adress + mail,
-                sPostalNumber = postnumber,
-                sCity= city
-            };
+                ViewBag.cartCount = ((List<tbProduct>)Session["cartList"]).Sum(c => c.iCount);
+            }
             //string AgentID; //mitt konto/integration
             //string Key; //md5, mitt konto/integration
             //string Description = "SWEProtein";
@@ -85,10 +95,9 @@ namespace SWEprotein.Controllers
             //string MD5string = SellerEmail + ":" + Cost + ":" + ExtraCost + ":" + OkUrl + ":" + GuaranteeOffered
             //string MD5Hash = MD5(MD5string);
 
-            var order = new tbOrder()
+            var order = new tbOrder
             {
-     
-                //iUserID = Session["guestUser"], //Byt till Session["login"].ID
+                iUserID = 2, //Byt till Session["login"].ID
                 iStatus = 1,
                 iSum = ((List<tbProduct>)Session["cartList"]).Sum(prod => prod.iPrice * prod.iCount),
                 dtOrderDate = DateTime.Now
@@ -99,7 +108,7 @@ namespace SWEprotein.Controllers
             db.SubmitChanges();
             foreach (tbProduct prod in ((List<tbProduct>)Session["cartList"]))
             {
-                var prodOrder = new tbProductOrder()
+                var prodOrder = new tbProductOrder
                 {
                     iOrderID = order.iID,
                     iProductID = prod.iID,
@@ -110,7 +119,6 @@ namespace SWEprotein.Controllers
 
             }
             db.SubmitChanges();
-            Session["cartList"] = null;
             return View(); //Gå till för "färdig" betalning
         }
 

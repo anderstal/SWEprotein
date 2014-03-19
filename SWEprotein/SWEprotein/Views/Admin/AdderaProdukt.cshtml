@@ -13,7 +13,7 @@
     <p>Produktnamn</p>
     @Html.TextBox("ProductName")
     <p>Produktbeskrivning</p>
-    @Html.TextArea("ProductDesc",null, new{@class="form-control", rows="3"})
+    @Html.TextArea("ProductDesc", null, new {@class = "form-control", rows = "3"})
 
     <p>Produktpris</p>
     @Html.TextBox("ProductPrice")
@@ -22,21 +22,20 @@
     <p> Produkttyp</p>
     @Html.DropDownList("productType")
 
-}
-<br/>
- <p>Produktbild:</p>
+
+    <br/>
+    <p>Produktbild:</p>
     <input type="file" name="file" />
-      
 
-    <br /><br />
-<input type="submit" value="Lägg in Produkt" />
-    
-    
-<br/>
-@Html.ActionLink("Tillbaka", "AdminSidan","Admin")
+    <br />
+    <input type="submit" value="Lägg in Produkt" />
 
-<h4>@ViewBag.status</h4>
+    <br/>
+    <br/>
+    @Html.ActionLink("Tillbaka", "AdminSidan", "Admin")
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <h4>@ViewBag.status</h4>
 }
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

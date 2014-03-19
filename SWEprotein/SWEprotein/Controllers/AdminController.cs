@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using SWEprotein.Models;
@@ -13,10 +14,16 @@ namespace SWEprotein.Controllers
 
         DataClasses1DataContext db = new DataClasses1DataContext();
 
+
         public ActionResult AdminSidan()
         {
-            return View();
+            var lowQuantityProducts = from f in db.tbProducts
+                                      where f.iStockBalance <= 10
+                                      select f;
+
+            return View(lowQuantityProducts);
         }
+
         [HttpGet]
         public ActionResult AdderaProdukt()
         {
@@ -39,7 +46,7 @@ namespace SWEprotein.Controllers
                     file.SaveAs(path);
                 }
             }
-           
+
             bool status = false; // Meddelande indikator
             var products = getProducts();
 
@@ -79,12 +86,13 @@ namespace SWEprotein.Controllers
                             iStockBalance = int.Parse(productQuantity),
                             iProductType = int.Parse(productType),
                             sPicture = string.Format("/content/images/products/{0}", fileString)
-                            
+
                         };
                         db.tbProducts.InsertOnSubmit(product);
                         db.SubmitChanges();
-                        ViewBag.status = "Du har nu lagt till " + productName + " till produktlistan";
+                        ViewBag.status = "Du har nu lagt till produkt:" + productName.ToUpper() ;
                         status = true;
+                        return View();
                     }
                 }
             }
@@ -94,67 +102,11 @@ namespace SWEprotein.Controllers
                 status = true;
                 return View();
             }
-         
+
             return RedirectToAction("Index", "Product");
         }
-        public ActionResult AdderaProdukt(string productName, string productPrice, string productQuantity, string productDesc, string productType)
-        {
-            bool status = false; // Meddelande indikator
-            List<tbProduct> products = getProducts();
 
-            try
-            {
-                if (productName != null)
-                {
-                    if (productPrice == null)
-                    {
-                        ViewBag.status = "Du måste ange ett pris.";
-                        status = true;
-                    }
-                    if (productQuantity == null)
-                    {
-                        ViewBag.status = "Ange lagersaldo på produkt.";
-                        status = true;
-                    }
-                    if (string.IsNullOrEmpty(productDesc))
-                    {
-                        productDesc = "";
-                    }
-                    if (!status)
-                        foreach (var f in db.tbProducts)
-                            if (f.sName.ToLower() == productName.ToLower())
-                            {
-                                status = true;
-                                @ViewBag.status = "Produkten finns redan, Välj ett annat namn.";
-                            }
-
-                    if (!status)
-                    {
-                        var product = new tbProduct
-                        {
-                            sName = productName,
-                            sDescription = productDesc,
-                            iPrice = int.Parse(productPrice),
-                            iStockBalance = int.Parse(productQuantity),
-                            iProductType = int.Parse(productType)
-                        };
-                        db.tbProducts.InsertOnSubmit(product);
-                        db.SubmitChanges();
-                        ViewBag.status = "Du har nu lagt till " + productName + " till produktlistan";
-                        status = true;
-                    }
-                }
-            }
-            catch
-            {
-                ViewBag.status = "Du måste fylla i alla fält korrekt.";
-                status = true;
-                return View();
-            }
-            return View();
-        }
-
-        public ActionResult TaBortProdukt(string id)        // int borde användas som id
+        public ActionResult TaBortProdukt(string id, string searchString)        // int borde användas som id
         {
             List<tbProduct> productlista = new List<tbProduct>();
             productlista = (from f in db.tbProducts
@@ -163,6 +115,15 @@ namespace SWEprotein.Controllers
             var product2Delete = (from f in db.tbProducts
                                   where f.sName == id
                                   select f).FirstOrDefault();
+
+            var productList = db.tbProducts.ToList();
+
+            if (searchString != null)
+            {
+                productList = (from prod in db.tbProducts.Where(c => c.sName.Contains(searchString)) select prod).ToList();
+
+                return View(productList);
+            }
 
             if (id != null)
             {

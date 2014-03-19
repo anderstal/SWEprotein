@@ -1,0 +1,93 @@
+﻿@model SWEprotein.Models.tbProduct
+
+@{
+    ViewBag.Title = "EditProduct";
+}
+
+<h2>EditProduct</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>tbProduct</legend>
+
+        @Html.HiddenFor(model => model.iID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iProductType)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.iProductType)
+            @Html.ValidationMessageFor(model => model.iProductType)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.sName)
+            @Html.ValidationMessageFor(model => model.sName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iPrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.iPrice)
+            @Html.ValidationMessageFor(model => model.iPrice)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sPicture)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.sPicture)
+            @Html.ValidationMessageFor(model => model.sPicture)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sDescription)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.sDescription)
+            @Html.ValidationMessageFor(model => model.sDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iStockBalance)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.iStockBalance)
+            @Html.ValidationMessageFor(model => model.iStockBalance)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iItemsSold)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.iItemsSold)
+            @Html.ValidationMessageFor(model => model.iItemsSold)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.iCount)
+            @Html.ValidationMessageFor(model => model.iCount)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Product")
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

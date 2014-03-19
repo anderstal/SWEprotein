@@ -116,6 +116,8 @@ namespace SWEprotein.Controllers
                                   where f.sName == id
                                   select f).FirstOrDefault();
 
+
+            //Sökfunktion tabortview
             var productList = db.tbProducts.ToList();
 
             if (searchString != null)
@@ -125,6 +127,7 @@ namespace SWEprotein.Controllers
                 return View(productList);
             }
 
+            //Tar emot id och tar bort produkten
             if (id != null)
             {
                 db.tbProducts.DeleteOnSubmit(product2Delete);
@@ -146,6 +149,20 @@ namespace SWEprotein.Controllers
                         select f).ToList();
             return products;
         }
+
+        [HttpGet]
+        public ActionResult EditProduct()
+        {
+            return View();  
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct(int id)
+        {
+            return View();
+        }
+
+
         //Orders.cshtml, listar ut alla orders
         public ActionResult Orders(string emailFilter)
         {
